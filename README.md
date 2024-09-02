@@ -1,131 +1,211 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+## Business Understanding (CRISP-DM Phase 1)
+We have been appracohed by Lydia Doe who has inherated a number of properties (4 in total) from a deceased great grand-father in Ames, Iowa, USA. Lydia has plenty of knowledge of home pricing in her home country of Belgium but is worried this may not transfer over to the housing market in the USA and is looking to get an accurate report of what the 4 houses are worth.
 
-Welcome USER_NAME,
+### Here’s a breakdown of the business problem:
+- **Client**: Lydia Doe, who inherited 4 properties in Ames, Iowa.
+- **Objective**: Help Lydia estimate the sale prices of these properties based on historical data from Ames.
+- **Why this is important**: Lydia doesn’t want to risk inaccurate estimates and potential financial loss. 
+- **Client Expectations**:
+  - **Insight into how house attributes (size, condition, etc.) correlate with sale prices.**
+  - **A predictive model**: To predict the sale price of her houses and any other house in Ames.
+  - **Data visualizations**: To understand key correlations between features and sale price.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+## Data Understanding (CRISP-DM Phase 2)
+In this phase, we focus on exploring and understanding the dataset provided for predicting house prices in Ames, Iowa. The dataset includes various features that describe the properties, such as square footage, number of bedrooms, quality ratings, and more. Below is an overview of the key features and their corresponding descriptions:
 
-## Gitpod Reminders
+- **1stFlrSF**: First Floor square feet
+  - Range: 334 - 4692
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+- **2ndFlrSF**: Second floor square feet
+  - Range: 0 - 2065
 
-`python3 -m http.server`
+- **BedroomAbvGr**: Bedrooms above grade (does NOT include basement bedrooms)
+  - Range: 0 - 8
 
-A blue button should appear to click: _Make Public_,
+- **BsmtExposure**: Refers to walkout or garden level walls
+  - Categories:
+    - Gd: Good Exposure
+    - Av: Average Exposure
+    - Mn: Minimum Exposure
+    - No: No Exposure
+    - None: No Basement
 
-Another blue button should appear to click: _Open Browser_.
+- **BsmtFinType1**: Rating of basement finished area
+  - Categories:
+    - GLQ: Good Living Quarters
+    - ALQ: Average Living Quarters
+    - BLQ: Below Average Living Quarters
+    - Rec: Average Rec Room
+    - LwQ: Low Quality
+    - Unf: Unfinished
+    - None: No Basement
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+- **BsmtFinSF1**: Type 1 finished square feet
+  - Range: 0 - 5644
 
-A blue button should appear to click: _Make Public_,
+- **BsmtUnfSF**: Unfinished square feet of basement area
+  - Range: 0 - 2336
 
-Another blue button should appear to click: _Open Browser_.
+- **TotalBsmtSF**: Total square feet of basement area
+  - Range: 0 - 6110
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+- **GarageArea**: Size of garage in square feet
+  - Range: 0 - 1418
 
-To log into the Heroku toolbelt CLI:
+- **GarageFinish**: Interior finish of the garage
+  - Categories:
+    - Fin: Finished
+    - RFn: Rough Finished
+    - Unf: Unfinished
+    - None: No Garage
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+- **GarageYrBlt**: Year garage was built
+  - Range: 1900 - 2010
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+- **GrLivArea**: Above grade (ground) living area square feet
+  - Range: 334 - 5642
 
-### Connecting your Mongo database
+- **KitchenQual**: Kitchen quality
+  - Categories:
+    - Ex: Excellent
+    - Gd: Good
+    - TA: Typical/Average
+    - Fa: Fair
+    - Po: Poor
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+- **LotArea**: Lot size in square feet
+  - Range: 1300 - 215245
 
-------
+- **LotFrontage**: Linear feet of street connected to property
+  - Range: 21 - 313
 
-## Release History
+- **MasVnrArea**: Masonry veneer area in square feet
+  - Range: 0 - 1600
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+- **EnclosedPorch**: Enclosed porch area in square feet
+  - Range: 0 - 286
 
-**June 18, 2024,** Add Mongo back into template
+- **OpenPorchSF**: Open porch area in square feet
+  - Range: 0 - 547
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+- **OverallCond**: Rates the overall condition of the house
+  - Categories:
+    - 10: Very Excellent
+    - 9: Excellent
+    - 8: Very Good
+    - 7: Good
+    - 6: Above Average
+    - 5: Average
+    - 4: Below Average
+    - 3: Fair
+    - 2: Poor
+    - 1: Very Poor
 
-**May 28 2024:** Fix Mongo and Links installs
+- **OverallQual**: Rates the overall material and finish of the house
+  - Categories:
+    - 10: Very Excellent
+    - 9: Excellent
+    - 8: Very Good
+    - 7: Good
+    - 6: Above Average
+    - 5: Average
+    - 4: Below Average
+    - 3: Fair
+    - 2: Poor
+    - 1: Very Poor
 
-**April 26 2024:** Update node version to 16
+- **WoodDeckSF**: Wood deck area in square feet
+  - Range: 0 - 736
 
-**September 20 2023:** Update Python version to 3.9.17.
+- **YearBuilt**: Original construction date
+  - Range: 1872 - 2010
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+- **YearRemodAdd**: Remodel date (same as construction date if no remodeling or additions)
+  - Range: 1950 - 2010
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+- **SalePrice**: Sale Price
+  - Range: 34900 - 755000
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+This dataset provides a comprehensive view of various factors that could potentially influence the sale price of a house in Ames, Iowa. Understanding these features is crucial for building a predictive model that accurately estimates house prices based on these attributes.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+## Hypothesis and Validation
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+### Hypothesis
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+Based on research in the real estate domain and existing knowledge, several factors are believed to significantly influence the sale price of a house. These factors can be broadly categorized into external and internal attributes:
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+- **External Factors**: 
+  - Location is typically the most critical factor affecting sale price. Proximity to public transportation, grocery stores, and educational institutions also plays a crucial role.
+  
+  However, since our dataset does not include location-based data for properties in Ames, Iowa, we are unable to validate this aspect.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+- **Internal Factors**: The following attributes are hypothesized to have the greatest impact on house prices:
+  - Overall quality of the house.
+  - Total square footage.
+  - Number of bedrooms and bathrooms.
+  - Condition of the kitchen and bathroom, with newly renovated spaces often significantly increasing the sale price.
+  - Year of construction.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+### Validation
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+- The hypothesis will be validated through a correlation study using both Spearman and Pearson correlation coefficients.
 
 ---
 
-Happy coding!
+## Rationale for Mapping Business Requirements to Data Visualizations and Machine Learning Tasks
+
+### Business Requirement 1:
+- **Objective**: Investigate the relationship between house attributes and sale prices.
+  - **Actions**:
+    - Conduct a detailed correlation study using both Spearman and Pearson methods.
+    - Visualize the strength of correlations with sale price.
+    - Generate plots for the variables that show the highest correlations with sale price to derive actionable insights.
+
+### Business Requirement 2:
+- **Objective**: Develop a machine learning model to predict the sale price of Lydia's four inherited houses and any house in Ames, Iowa, with at least 75% accuracy.
+  - **Actions**:
+    - Employ a variety of machine learning algorithms to identify the best-performing model.
+    - Perform extensive hyperparameter tuning to optimize the model's performance and ensure it meets the accuracy threshold.
+
+---
+
+## Machine Learning Business Case
+
+**1. Business Requirements**:
+- The client seeks to understand how various house attributes correlate with sale prices. This requires data visualizations showing these correlations.
+- Additionally, the client needs a predictive model to estimate the sale prices of her four inherited houses and other properties in Ames, Iowa.
+
+**2. Can conventional data analysis address any business requirements?**
+- Yes, conventional data analysis can be used to explore and visualize how house attributes correlate with sale prices.
+
+**3. What is the preferred output: a dashboard or an API?**
+- The client requires a dashboard for interactive exploration of the data and model predictions.
+
+**4. What defines a successful project outcome for the client?**
+- A detailed study highlighting the most significant variables correlated with sale price.
+- A reliable predictive model for estimating the sale price of both inherited and other houses in Ames, Iowa.
+
+**5. Can the project be divided into Epics and User Stories?**
+- Yes, the project can be broken down as follows:
+  - Gathering and collecting data.
+  - Data visualization, cleaning, and preparation.
+  - Training, optimizing, and validating the model.
+  - Planning, designing, and developing the dashboard.
+  - Deploying and releasing the dashboard.
+
+**6. Are there any ethical or privacy concerns?**
+- No, the dataset is publicly available and free of ethical or privacy concerns.
+
+**7. Does the data suggest a specific type of model?**
+- The data indicates that a regression model, with the sale price as the target variable, is appropriate.
+
+**8. What are the model’s inputs and outputs?**
+- **Inputs**: House attributes.
+- **Outputs**: Predicted sale price.
+
+**9. What are the performance criteria for the model?**
+- The model should achieve an R2 score of at least 0.75 on both the training and testing sets.
+
+**10. How will the client benefit?**
+- The client will be able to maximize the sale price of the inherited properties by using insights from the correlation study and the predictions from the machine learning model.
