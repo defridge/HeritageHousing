@@ -59,7 +59,7 @@ def app():
 
     # Key attributes - Scatter plots
     st.write("### Key Attribute Visualizations")
-    st.write("Below, we explore how some key features relate to the `SalePrice` using scatter plots.")
+    st.write("Below, we explore how some key features relate to the `SalePrice` using scatter plots and bar charts.")
 
     key_attributes = ['GrLivArea', 'TotalSF', 'GarageArea', 'YearBuilt']
     plt.figure(figsize=(15, 12))
@@ -75,14 +75,28 @@ def app():
     plt.tight_layout()
     st.pyplot(plt.gcf())
 
+    # Add the bar chart for OverallQual
+    st.write("### Bar Chart: Sale Price vs Overall Quality")
+    plt.figure(figsize=(15, 12))
+
+    # Plot bar chart for OverallQual
+    sns.barplot(x=df['OverallQual'], y=df['SalePrice'], errorbar=None)
+    plt.title('SalePrice vs OverallQual')
+    plt.xlabel('OverallQual')
+    plt.ylabel('SalePrice')
+
+    st.pyplot(plt)
+
     st.write(
-        """
-        **Insights from Scatter Plots:**
-        - Houses with larger living areas (`GrLivArea`) and total square footage (`TotalSF`) tend to have higher sale prices.
-        - There is a positive relationship between the `GarageArea` and `SalePrice`, though the effect is less pronounced compared to other attributes.
-        - Newer houses (`YearBuilt`) generally sell for more, but there are exceptions, as houses with higher-quality materials (captured by `OverallQual`) can still fetch a high price even if older.
-        """
-    )
+    """
+    **Insights from Scatter Plots and Bar Chart:**
+    - Houses with larger living areas (`GrLivArea`) and total square footage (`TotalSF`) tend to have higher sale prices, showing a strong positive relationship.
+    - There is a positive relationship between the `GarageArea` and `SalePrice`, though the effect is less pronounced compared to other attributes like living area and total square footage.
+    - Newer houses (`YearBuilt`) generally sell for more, but there are exceptions. Older houses with higher-quality materials (captured by `OverallQual`) can still fetch high prices.
+    - **OverallQual** (overall quality of the house) shows the strongest relationship with `SalePrice`. Higher quality houses consistently sell for more, regardless of other attributes like age or size. This is reflected clearly in the bar chart, where higher-quality ratings are associated with much higher sale prices.
+    """
+)
+
 
     # Interactive filter - for YearBuilt and SalePrice range
     st.write("### Interactive Data Exploration")
