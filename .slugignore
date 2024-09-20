@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+
+notebooks/
+
+inputs/datasets/raw/
+
+.git/
+.gitignore
+
+house-metadata.txt
+
+kaggle.json
+
+README.md
