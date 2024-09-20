@@ -1,3 +1,4 @@
+.pyenv/
 __pycache__/
 *.py[cod]
 
@@ -7,6 +8,8 @@ inputs/datasets/raw/
 
 .git/
 .gitignore
+.gitpod.dockerfile
+.gitpod.yml
 
 house-metadata.txt
 

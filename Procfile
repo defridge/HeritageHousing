@@ -1,1 +1,1 @@
-web: streamlit run app.py
+web: pip install -r requirements_prod.txt && streamlit run app.py
