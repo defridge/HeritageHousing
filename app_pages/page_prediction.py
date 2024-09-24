@@ -51,5 +51,26 @@ def app():
     st.write("---")
     st.write("### Predicted Prices for Inherited Houses")
 
-    # (Optional) You could add similar logic to send the inherited houses data to the Flask API as well,
-    # but for now, we'll keep it simple and focus on the single house prediction.
+    # Load the inherited houses dataset
+    inherited_houses = pd.read_csv('outputs/datasets/collection/inherited_houses_cleaned.csv')
+
+    # Align columns with expected API input
+    X_train = pd.read_csv('outputs/datasets/collection/X_train.csv')
+    inherited_houses_data = inherited_houses.reindex(columns=X_train.columns, fill_value=0)
+
+    # Prepare the input data for the API (as a list of dictionaries)
+    inherited_houses_json = inherited_houses_data.to_dict(orient='records')
+
+    # Send the request to the Flask API for the inherited houses predictions
+    try:
+        response = requests.post(API_URL, json=inherited_houses_json)
+        if response.status_code == 200:
+            predictions = response.json()['predictions']
+            inherited_houses['Predicted_SalePrice'] = predictions
+
+            # Display the inherited houses with their predicted sale prices
+            st.write(inherited_houses[['GrLivArea', 'TotalSF', 'GarageArea', 'YearBuilt', 'OverallQual', 'Predicted_SalePrice']])
+        else:
+            st.write(f"Error: {response.status_code}. Failed to get predictions from API for inherited houses.")
+    except Exception as e:
+        st.write(f"Error: {str(e)}")
