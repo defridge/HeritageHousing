@@ -1,26 +1,17 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import requests  # To send the data to the Flask API
 
 def app():
     st.title("House Price Prediction")
 
-    # Load the trained XGBoost model
-    model = joblib.load('outputs/models/xgb_model.pkl')
+    # Flask API URL (update this with your actual Flask API URL)
+    API_URL = 'https://housingmodel-api-6a6b8e797fa2.herokuapp.com/predict' # Update with your actual API URL if running remotely
 
-    # Load the cleaned dataset for inherited houses
-    inherited_houses_cleaned = pd.read_csv('outputs/datasets/collection/inherited_houses_cleaned.csv')
-    
-    # Load the X_train dataset to ensure feature alignment
-    X_train = pd.read_csv('outputs/datasets/collection/X_train.csv')
-    
-    # Align inherited_houses_cleaned columns with X_train (ensure same columns and order)
-    inherited_houses_data = inherited_houses_cleaned.reindex(columns=X_train.columns, fill_value=0)
-    
     st.write(
         """
         ### Predict House Sale Prices
-        Use the form below to input house features and predict the sale price using the trained XGBoost model.
+        Use the form below to input house features and predict the sale price using the trained model.
         """
     )
 
@@ -31,41 +22,34 @@ def app():
     year_built = st.number_input("Year the house was built:", min_value=1800, max_value=2023, value=2000)
     overall_qual = st.slider("Overall quality (1-10):", min_value=1, max_value=10, value=5)
 
-    # Prepare the input data for the model
-    input_data = pd.DataFrame({
-        'GrLivArea': [grlivarea],
-        'TotalSF': [total_sf],
-        'GarageArea': [garage_area],
-        'YearBuilt': [year_built],
-        'OverallQual': [overall_qual]
-    })
+    # Prepare the input data for the API
+    input_data = {
+        'GrLivArea': grlivarea,
+        'TotalSF': total_sf,
+        'GarageArea': garage_area,
+        'YearBuilt': year_built,
+        'OverallQual': overall_qual
+    }
 
     # Display the user inputted data
     st.write("#### Your Inputted House Features")
-    st.write(input_data)
+    st.write(pd.DataFrame([input_data]))
 
-    # Predict the sale price using the trained model
+    # Predict the sale price using the API
     if st.button("Predict Sale Price"):
-        # Align input_data columns with X_train
-        input_data_aligned = input_data.reindex(columns=X_train.columns, fill_value=0)
-        prediction = model.predict(input_data_aligned)[0]
-        st.write(f"### Predicted Sale Price: ${prediction:,.2f}")
+        try:
+            # Send the request to the Flask API and get the response
+            response = requests.post(API_URL, json=input_data)
+            if response.status_code == 200:
+                prediction = response.json()['prediction']
+                st.write(f"### Predicted Sale Price: ${prediction:,.2f}")
+            else:
+                st.write(f"Error: {response.status_code}. Failed to get prediction from API.")
+        except Exception as e:
+            st.write(f"Error: {str(e)}")
 
     st.write("---")
     st.write("### Predicted Prices for Inherited Houses")
-    st.write("Below are the predicted sale prices for Lydia's inherited houses.")
 
-    # Predict the prices for the inherited houses
-    inherited_houses_cleaned['Predicted_SalePrice'] = model.predict(inherited_houses_data)
-
-    # Display the inherited houses with their predicted sale prices
-    st.write(inherited_houses_cleaned[['GrLivArea', 'TotalSF', 'GarageArea', 'YearBuilt', 'OverallQual', 'Predicted_SalePrice']])
-
-    st.write(
-        """
-        ---
-        The predicted sale prices for Lydia’s inherited houses, along with any house in Ames, Iowa, 
-        can be calculated based on the input features above. The model achieves more than 75% accuracy,
-        ensuring that the predictions are aligned with the business requirements.
-        """
-    )
+    # (Optional) You could add similar logic to send the inherited houses data to the Flask API as well,
+    # but for now, we'll keep it simple and focus on the single house prediction.
