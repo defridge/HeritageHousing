@@ -56,7 +56,7 @@ def app():
         "confirming that houses with higher quality ratings consistently command higher prices."
     )
 
-    # Load the dataset (ensure the cleaned dataset is used)
+    # Load the dataset
     df = pd.read_csv('outputs/datasets/collection/HousePricing_cleaned.csv')
 
     # Plotting the correlation heatmap for the key attributes

@@ -1,23 +1,32 @@
-# Business Understanding (CRISP-DM Phase 1)
+# Heritage Housing
 
-We have been approached by Lydia Doe, who has inherited a number of properties (4 in total) from a deceased great-grandfather in Ames, Iowa, USA. Lydia has plenty of knowledge of home pricing in her home country of Belgium, but she is worried that this may not transfer over to the housing market in the USA. Lydia is looking to get an accurate report of what the 4 houses are worth.
+This project aims to help Lydia Doe estimate the sale prices of her inherited houses in Ames, Iowa, using machine learning and data visualization.
 
-### Here’s a breakdown of the business problem:
-- **Client:** Lydia Doe, who inherited 4 properties in Ames, Iowa.
-- **Objective:** Help Lydia estimate the sale prices of these properties based on historical data from Ames.
-- **Why this is important:** Lydia doesn’t want to risk inaccurate estimates and potential financial loss.
+## Table of Contents
 
-### Client Expectations:
-- Insight into how house attributes (size, condition, etc.) correlate with sale prices.
-- A predictive model to predict the sale price of her houses and any other house in Ames.
-- Data visualizations to understand key correlations between features and sale price.
+1. [Project Dataset](#project-dataset)
+2. [Business Requirements](#business-requirements)
+3. [Hypothesis and Validation](#hypothesis-and-validation)
+4. [The rationale to map the business requirements to the Data Visualizations and ML tasks](#the-rationale-to-map-the-business-requirements-to-the-data-visualizations-and-ml-tasks)
+   - [Epics](#epics)
+   - [User Stories](#user-stories)
+6. [Actionable Insights from Data Analysis](#actionable-insights-from-data-analysis)
+7. [Machine Learning Business Case](#machine-learning-business-case)
+8. [Dashboard Design (Streamlit App User Interface)](#dashboard-design-streamlit-app-user-interface)
+   - [Page 1: Project Summary](#page-1-project-summary)
+   - [Page 2: Data Study](#page-2-data-study)
+   - [Page 3: Hypothesis and Analysis](#page-3-hypothesis-and-analysis)
+   - [Page 4: Prediction](#page-4-prediction)
+   - [Page 5: Model Performance](#page-5-model-performance)
+9. [Flask API](#flask-api)
+9. [Deployment](#deployment)
+10. [Main Data Analysis & Machine Learning Libraries](#main-data-analysis--machine-learning-libraries)
+11. [Run Locally](#run-locally)
+12. [Credits](#credits)
 
-# Data Understanding (CRISP-DM Phase 2)
+## Project Dataset
 
-In this phase, we focus on exploring and understanding the dataset provided for predicting house prices in Ames, Iowa. The dataset includes various features that describe the properties, such as square footage, number of bedrooms, quality ratings, and more.
-
-### Dataset Source:
-The dataset used in this project is publicly available and sourced from the [Kaggle Ames Housing dataset](https://www.kaggle.com/datasets/codeinstitute/housing-prices-data). It contains detailed house features, including sale prices, and is ideal for building predictive models.
+The dataset used for this project is publicly available and sourced from the [Kaggle Ames Housing dataset](https://www.kaggle.com/datasets/codeinstitute/housing-prices-data). It contains detailed house features, including sale prices, and is ideal for building predictive models.
 
 ### Key Features:
 - **1stFlrSF:** First Floor square feet (334 - 4692)
@@ -34,56 +43,82 @@ The dataset used in this project is publicly available and sourced from the [Kag
 - **YearBuilt:** Year the house was built (1872 - 2010)
 - **SalePrice:** Sale price of the house (34900 - 755000)
 
-### CRISP-DM Process Overview:
-1. **Business Understanding:** Help Lydia price her inherited properties using historical housing data from Ames, Iowa.
-2. **Data Understanding:** Explore key features of the dataset, including house size, quality, and year built.
-3. **Data Preparation:** Handle missing values, encode categorical variables, and create additional features such as TotalSF.
-4. **Modeling:** Develop regression models to predict sale prices.
-5. **Evaluation:** Test model performance using R² and MSE, ensuring it meets the required 75% accuracy.
-6. **Deployment:** Build an interactive dashboard using Streamlit for user-friendly predictions.
+## Business Requirements
 
----
+Lydia Doe inherited four properties in Ames, Iowa, and seeks to estimate the sale prices of these properties using historical housing data from Ames.
 
-# Hypothesis and Validation
+### Client Expectations:
+1. Insight into how house attributes (size, condition, etc.) correlate with sale prices.
+2. A predictive model to estimate the sale price of her houses and any other house in Ames.
+3. Data visualizations to understand key correlations between features and sale price.
+
+## Hypothesis and Validation
 
 ### Hypothesis:
-Based on research in the real estate domain and existing knowledge, several factors are believed to significantly influence the sale price of a house:
 
-- **Overall Quality:** Houses with higher quality materials and finishes will command higher sale prices.
-- **Total Square Footage:** Larger houses will generally sell for more.
-- **Bedrooms and Bathrooms:** The number of bedrooms and bathrooms impacts the sale price.
-- **Kitchen and Bathroom Condition:** Newly renovated kitchens and bathrooms significantly increase sale price.
-- **Year Built:** Newer houses tend to have higher sale prices, but older houses with renovations can still maintain value.
+- **GrLivArea:** Larger living areas will result in higher sale prices.
+- **TotalSF:** Houses with larger total square footage will sell for higher prices.
+- **GarageArea:** The larger the garage, the more likely it is to increase the sale price.
+- **YearBuilt:** Newer houses will have higher sale prices, with older houses potentially losing value over time.
+- **OverallQual:** Houses with higher overall quality will command higher sale prices.
 
 ### Validation:
 We will validate this hypothesis by conducting a correlation study using both Spearman and Pearson correlation coefficients.
 
----
+## The Rationale to Map the Business Requirements to Data Visualizations and ML Tasks
 
-# Rationale: Mapping Business Requirements to Data Visualizations and ML Tasks
+The goal of this project is to help Lydia estimate the sale prices of her inherited houses and to provide insights into the Ames, Iowa housing market. The business requirements are addressed through data visualizations and machine learning tasks, which are structured into distinct epics and user stories.
 
-The purpose of this project is to help Lydia Doe estimate the sale prices of her inherited houses and to provide her with insights into the housing market in Ames, Iowa. The project is structured into distinct tasks that directly address these business requirements using data analysis, visualization, and machine learning (ML) models.
+### Epics:
 
-### Business Requirement 1: Understanding House Attributes and Sale Prices
+1. **Data Exploration and Hypothesis Validation**
+2. **Data Preparation**
+3. **Model Development and Validation**
+4. **Dashboard Development and Deployment**
 
-Lydia needs insights into how various house attributes (such as square footage, garage area, and year built) correlate with house sale prices. The following actions were taken:
+### User Stories:
 
-1. **Data Exploration and Initial Analysis:**
-   - We loaded and explored the dataset to identify any missing values, outliers, and data inconsistencies.
-   - Correlation studies (Pearson and Spearman) were conducted to identify the most relevant features that impact sale price.
-   - Visualizations such as scatter plots and heatmaps were generated to provide Lydia with an intuitive understanding of key relationships.
+#### Epic 1: Data Exploration and Hypothesis Validation
 
-   **ML Mapping:**
-   - These actions directly inform the feature selection process for the machine learning model. The insights derived from this analysis guide the selection of relevant features such as `GrLivArea`, `TotalSF`, `GarageArea`, and `OverallQual`.
+1. **User Story:** As a developer, I want to understand the relationship between house attributes and sale prices.
+   - **Task:** Conduct data exploration and visualize the relationships between house features and sale prices.
 
----
+2. **User Story:** As a developer, I want to validate my hypothesis about which factors most affect house prices.
+   - **Task:** Use correlation studies (Spearman and Pearson) to validate the hypothesis.
 
-# Actionable Insights from Data Analysis
+#### Epic 2: Data Preparation
+
+1. **User Story:** As a developer, I want to ensure that the dataset is clean and free from inconsistencies.
+   - **Task:** Clean the dataset by handling missing values, outliers, and ensuring data consistency.
+
+2. **User Story:** As a developer, I want to create new features and select the most relevant ones to improve model accuracy.
+   - **Task:** Perform feature engineering to create additional features such as `TotalSF` and select key features for modeling.
+
+#### Epic 3: Model Development and Validation
+
+1. **User Story:** As a developer, I want to develop a model that can accurately predict house sale prices.
+   - **Task:** Train and evaluate regression models (e.g., XGBoost) to predict sale prices.
+
+2. **User Story:** As a developer, I want to optimize the model’s performance through hyperparameter tuning.
+   - **Task:** Use techniques like GridSearchCV to find optimal hyperparameters for the model.
+
+3. **User Story:** As a developer, I want to validate the model’s predictions against real data to ensure accuracy.
+   - **Task:** Evaluate the model's performance using R² and mean squared error (MSE), and plot residuals to assess accuracy.
+
+#### Epic 4: Dashboard Development and Deployment
+
+1. **User Story:** As a developer, I want an interactive dashboard where I can visualize data correlations and model predictions.
+   - **Task:** Develop an interactive Streamlit dashboard that includes both visualizations and the ability to make live predictions.
+
+2. **User Story:** As a developer, I want the dashboard to be accessible online for easy access to the insights.
+   - **Task:** Deploy the Streamlit app on a cloud platform like Heroku and ensure it is accessible to Lydia for real-time use.
+
+## Actionable Insights from Data Analysis
 
 1. **GrLivArea and SalePrice**:
    - There is a strong positive correlation between **GrLivArea** (above-ground living area) and **SalePrice** (correlation of 0.71 Pearson, 0.73 Spearman).
    - Larger houses tend to sell for significantly higher prices.
-   
+
 2. **Total Square Footage and SalePrice**:
    - **TotalSF** (total square footage, including basement) shows a very strong positive correlation with **SalePrice** (correlation of 0.77 Pearson, 0.80 Spearman).
    - Houses with more overall square footage tend to have higher sale prices.
@@ -100,21 +135,12 @@ Lydia needs insights into how various house attributes (such as square footage, 
    - **YearBuilt** shows a moderate positive correlation with **SalePrice** (correlation of 0.59 for both Pearson and Spearman).
    - Newer houses tend to sell for more, but older houses with high-quality renovations can still command high sale prices.
 
----
+## Machine Learning Business Case
 
-# Machine Learning Business Case
-
-### Business Requirement 2:
 The client, Lydia, has inherited several properties in Ames, Iowa, and requires a reliable and accurate model to predict the sale price of these properties. The project objective is to develop a predictive model with an accuracy of at least **75%** (measured by **R²** score) for any house in Ames, including the four inherited houses.
 
 ### Machine Learning Task:
 The business problem is framed as a **regression task**, where the goal is to predict the continuous target variable `SalePrice` using house attributes. Multiple machine learning models will be used to determine which one performs best for this task.
-
----
-
-# Machine Learning Model Performance
-
-The primary objective of the machine learning model is to predict the sale price of houses in Ames, Iowa, with at least 75% accuracy (measured by **R² score**).
 
 ### XGBoost Model Performance:
 - **Training R²**: 0.99
@@ -124,40 +150,135 @@ The model achieved an **R² score of 0.90** on the testing dataset, exceeding th
 
 The XGBoost model has been selected as the final model for making predictions on Lydia's inherited houses.
 
----
+## Dashboard Design (Streamlit App User Interface)
 
-# User Stories and Epics
+The Streamlit dashboard consists of five pages that address the business requirements and provide a user-friendly interface for Lydia to explore the data, generate insights, and make predictions about house sale prices.
 
-The project development process was driven by user stories that reflect Lydia’s business needs and map directly to actionable tasks within the project. Here’s a breakdown of the major user stories and their connection to the tasks:
+### Page 1: Project Summary
+- **Purpose**: This page introduces the project and outlines the business problem, objectives, and key features of the dataset.
+- **Content**:
+  - Brief overview of the problem Lydia faces and the solution provided.
+  - Key dataset features and a summary of how the data was used for analysis and prediction.
+  - Explanation of the machine learning model chosen for predictions.
+  
+### Page 2: Data Study
+- **Purpose**: This page provides a detailed exploration of the data used in the project.
+- **Content**:
+  - Visualizations of key variables such as `GrLivArea`, `TotalSF`, `GarageArea`, and `OverallQual`.
+  - Heatmaps showing correlations between features and sale price.
+  - Insights derived from these visualizations, addressing Lydia's interest in understanding key factors influencing house prices.
 
-### Epic 1: Data Exploration and Hypothesis Validation
-1. **User Story:** *As a developer, I want to understand the relationship between house attributes and sale prices.*
-   - This user story covers the initial data exploration process, ensuring that all relevant house attributes are analyzed to identify how they impact sale price.
+### Page 3: Hypothesis and Analysis
+- **Purpose**: This page presents the hypotheses about factors affecting house prices and validates them using data analysis.
+- **Content**:
+  - Hypotheses regarding the relationship between house attributes and sale price (e.g., larger houses, newer houses, higher quality ratings leading to higher sale prices).
+  - Correlation studies (Spearman and Pearson) and visualizations validating these hypotheses.
 
-2. **User Story:** *As a developer, I want to validate my hypothesis about which factors most affect house prices.*
-   - This user story is focused on hypothesis validation, using exploratory data analysis and visualizations to confirm which house attributes (e.g., `OverallQual`, `GrLivArea`, `YearBuilt`) most affect sale prices.
+### Page 4: Prediction
+- **Purpose**: This page allows Lydia to input data about her inherited properties or any other properties and receive predicted sale prices.
+- **Content**:
+  - Form to input house attributes such as `GrLivArea`, `TotalSF`, `GarageArea`, `YearBuilt`, and `OverallQual`.
+  - Button to generate the predicted sale price using the machine learning model.
+  - Display of the predicted sale price along with an explanation of how the prediction was made.
 
-### Epic 2: Data Preparation
-1. **User Story:** *As a developer, I want to ensure that the dataset is clean and free from inconsistencies.*
-   - This story addresses the data cleaning process, ensuring the dataset is properly prepared for modeling by handling missing values, outliers, and inconsistencies.
+### Page 5: Model Performance
+- **Purpose**: This page shows the performance of the machine learning model used to predict house sale prices.
+- **Content**:
+  - Model performance metrics such as R² and MSE for both training and testing data.
+  - Visualizations of actual vs predicted sale prices.
 
-2. **User Story:** *As a developer, I want to create new features and select the most relevant ones to improve model accuracy.*
-   - This story involves feature engineering, where new features (e.g., `TotalSF`) are created and key features are selected to optimize the machine learning model.
+## Flask API
 
-### Epic 3: Model Development and Validation
-1. **User Story:** *As a developer, I want to develop a model that can accurately predict house sale prices.*
-   - The focus of this story is on training different regression models and evaluating them using key performance metrics (R², RMSE, MAE).
+### Purpose:
+The Flask API was developed to offload the heavy machine learning computations, specifically the use of the XGBoost package, to a separate service. This approach helps reduce the slug size of the Streamlit app deployed on Heroku, as the XGBoost package significantly increases the slug size beyond Heroku's 500MB limit.
 
-2. **User Story:** *As a developer, I want to optimize the model’s performance through hyperparameter tuning.*
-   - This user story ensures that the machine learning models are tuned to achieve maximum performance, meeting the 75% accuracy goal.
+### Overview:
+The Flask API acts as a bridge between the Streamlit dashboard and the machine learning model. When a user inputs house data in the Streamlit app to predict sale prices, the Streamlit app sends a POST request to the Flask API. The Flask API processes the request, runs the prediction using the pre-trained XGBoost model, and returns the result back to the Streamlit app.
 
-3. **User Story:** *As a developer, I want to validate the model’s predictions against real data to ensure accuracy.*
-   - This story focuses on evaluating the model’s predictions, comparing predicted prices with actual sale prices, and plotting residuals to ensure accuracy.
+### Key Features:
+- The Flask API is hosted separately from the Streamlit app and only focuses on handling machine learning predictions to reduce overhead.
+- It utilizes the XGBoost model to predict house sale prices based on house attributes like `GrLivArea`, `TotalSF`, `GarageArea`, `YearBuilt`, and `OverallQual`.
+- The API allows for seamless interaction with the machine learning model without affecting the performance or deployment size of the Streamlit app.
 
-### Epic 4: Dashboard Development and Deployment
-1. **User Story:** *As a developer, I want an interactive dashboard where I can visualize data correlations and model predictions.*
-   - This user story drives the creation of the Streamlit dashboard, ensuring it includes both correlation visualizations and model predictions.
+### Requirements Management:
+To accommodate the heavy dependencies of the XGBoost package in the development environment while ensuring a lightweight deployment to Heroku, two `requirements.txt` files are used:
+1. **requirements-notebooks.txt** – This file contains all the necessary dependencies for full development, including XGBoost for local training and testing of the machine learning model.
+2. **requirements.txt** – This file excludes the XGBoost package, ensuring the Streamlit app remains lightweight during deployment on Heroku. The app uses the Flask API to handle model predictions externally.
 
-2. **User Story:** *As a developer, I want the dashboard to be accessible online for easy access to the insights.*
-   - This story ensures the dashboard is deployed on a cloud platform (e.g., Heroku) and made accessible to Lydia for real-time use.
+By separating the dependencies, the XGBoost package is excluded from the Heroku deployment but is still available for development purposes.
 
+### How It Works:
+1. The Streamlit app sends a POST request with house attribute data to the Flask API.
+2. The Flask API receives the request, processes the input data, and runs the prediction using the pre-trained XGBoost model.
+3. The predicted sale price is returned as a JSON response to the Streamlit app, where it is displayed to the user.
+4. The API is designed to be scalable and maintainable, with a simple structure to handle future model updates.
+
+### Link to Flask API Repository:
+The full code for the Flask API can be found in the [Flask API Repository](https://github.com/defridge/model.api).
+
+### Summary:
+By offloading the XGBoost model and its dependencies to the Flask API, the Streamlit app remains within the Heroku slug size limits while still providing accurate predictions of house sale prices. This setup ensures smooth functionality across both development and deployment environments.
+
+## Deployment
+
+This project involves deploying both the **Streamlit app** and the **Flask API** to Heroku. The two-part deployment was designed to reduce the slug size of the Streamlit app by offloading the heavy XGBoost model to a separate Flask API service.
+
+### Steps to Deploy the Streamlit App:
+
+1. **Create a Heroku Account**:
+   - If you don't have one already, create an account at [Heroku](https://heroku.com/).
+
+2. **Set up the GitHub Repository**:
+   - Ensure your project is pushed to a GitHub repository.
+   - The repository should include:
+     - `app.py` for the Streamlit app.
+     - `Procfile` to specify the command to run the Streamlit app.
+     - `setup.sh` for setting up the configuration for Streamlit.
+     - `requirements.txt` to include only the lightweight dependencies required for deployment.
+
+3. **Create a Heroku App**:
+   - In your Heroku dashboard, click **New** and create a new app.
+   - Choose a unique name for your app and select the appropriate region.
+
+4. **Connect Heroku to GitHub**:
+   - Go to the **Deploy** tab in your Heroku app.
+   - Under **Deployment method**, select **GitHub** and connect your GitHub account.
+   - Search for your repository and select it.
+
+5. **Manual Deployment**:
+   - To deploy manually, click **Deploy Branch** in the **Deploy** tab.
+
+6. **Slug Size Management**:
+   - The Streamlit app uses a separate `requirements.txt` file to exclude heavy dependencies such as XGBoost. This keeps the slug size under Heroku’s 500MB limit.
+
+### Steps to Deploy the Flask API:
+
+1. **Set up the Flask API in a Separate Repository**:
+   - Create a separate repository for the Flask API. This ensures that the XGBoost package and its dependencies are contained within the API, reducing the size of the Streamlit app.
+   - The repository should include:
+     - `app.py` to define the Flask API.
+     - `requirements.txt` to include all dependencies, including XGBoost.
+
+2. **Create a Heroku App for the Flask API**:
+   - In your Heroku dashboard, create a new app specifically for the Flask API.
+   - Follow similar steps as described for the Streamlit app.
+
+3. **Deploy the Flask API**:
+   - Follow the same steps to connect to GitHub, enable automatic/manual deployments, and manage dependencies.
+
+4. **Connect Streamlit to the Flask API**:
+   - Once both the Streamlit app and Flask API are deployed, update the Streamlit app to send POST requests to the deployed Flask API’s URL (e.g., `https://housingmodel-api-6a6b8e797fa2.herokuapp.com/predict`).
+
+### Additional Considerations:
+
+- **Two Requirements Files**:
+  - The project uses two `requirements.txt` files to handle dependencies effectively:
+    - `requirements-notebooks.txt` (for local development) includes all dependencies, including XGBoost.
+    - `requirements.txt` (for Heroku deployment) excludes XGBoost, which is handled by the Flask API.
+
+### Links to Deployed Applications:
+
+- **Streamlit App**: [Deployed Streamlit App](https://heritagehousingpp5-5d67c321f61a.herokuapp.com/)
+- **Flask API**: [Deployed Flask API](https://housingmodel-api-6a6b8e797fa2.herokuapp.com/)
+
+By separating the Streamlit app and the Flask API, the deployment size was reduced, and the heavy computations are handled by the API, ensuring smoother performance and faster deployment times.

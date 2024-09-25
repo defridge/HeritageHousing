@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
-import requests  # To send the data to the Flask API
+import requests
 
 def app():
     st.title("House Price Prediction")
 
-    # Flask API URL (update this with your actual Flask API URL)
-    API_URL = 'https://housingmodel-api-6a6b8e797fa2.herokuapp.com/predict' # Update with your actual API URL if running remotely
+    
+    API_URL = 'https://housingmodel-api-6a6b8e797fa2.herokuapp.com/predict'
 
     st.write(
         """

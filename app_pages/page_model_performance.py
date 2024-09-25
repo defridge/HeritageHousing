@@ -7,7 +7,7 @@ def app():
     st.title("Model Performance Evaluation")
 
     # Flask API URL for model performance
-    API_URL = 'https://housingmodel-api-6a6b8e797fa2.herokuapp.com/model_performance'  # Update this with your actual API URL
+    API_URL = 'https://housingmodel-api-6a6b8e797fa2.herokuapp.com/model_performance'
 
     st.write(
         """
