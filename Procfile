@@ -1,1 +1,1 @@
-web: pip install -r requirements-heroku.txt && sh setup.sh && streamlit run app.py
+web: sh setup.sh && streamlit run app.py
