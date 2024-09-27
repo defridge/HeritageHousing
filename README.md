@@ -234,7 +234,7 @@ This project involves deploying both the **Streamlit app** and the **Flask API**
      - `app.py` for the Streamlit app.
      - `Procfile` to specify the command to run the Streamlit app.
      - `setup.sh` for setting up the configuration for Streamlit.
-     - `requirements.txt` to include only the lightweight dependencies required for deployment.
+     - `requirements-notebooks.txt` to include only the lightweight dependencies required for deployment.
 
 3. **Create a Heroku App**:
    - In your Heroku dashboard, click **New** and create a new app.
@@ -249,7 +249,7 @@ This project involves deploying both the **Streamlit app** and the **Flask API**
    - To deploy manually, click **Deploy Branch** in the **Deploy** tab.
 
 6. **Slug Size Management**:
-   - The Streamlit app uses a separate `requirements.txt` file to exclude heavy dependencies such as XGBoost. This keeps the slug size under Heroku’s 500MB limit.
+   - The Streamlit app uses a separate `requirements-notebooks.txt` file to exclude heavy dependencies such as XGBoost. This keeps the slug size under Heroku’s 500MB limit.
 
 ### Steps to Deploy the Flask API:
 
@@ -282,3 +282,121 @@ This project involves deploying both the **Streamlit app** and the **Flask API**
 - **Flask API**: [Deployed Flask API](https://housingmodel-api-6a6b8e797fa2.herokuapp.com/)
 
 By separating the Streamlit app and the Flask API, the deployment size was reduced, and the heavy computations are handled by the API, ensuring smoother performance and faster deployment times.
+
+## Main Data Analysis & Machine Learning Libraries
+
+The project leverages several essential libraries for data manipulation, visualization, and machine learning. Below is a list of the key libraries used in this project:
+
+### Main Data Analysis Libraries:
+
+- **Pandas:**
+  - Used for data manipulation and analysis, especially for handling structured data in DataFrames.
+  - Key functions: handling missing values, generating summary statistics, and creating new features like `TotalSF`.
+  
+- **NumPy:**
+  - Essential for numerical computing in Python, used for efficient data storage and manipulation.
+  - Provides support for large, multi-dimensional arrays and matrices.
+  
+- **Matplotlib:**
+  - A popular library for creating static, interactive, and animated visualizations in Python.
+  - Used primarily for generating plots like scatter plots, histograms, and line graphs in this project.
+
+- **Seaborn:**
+  - A data visualization library based on Matplotlib, providing a high-level interface for drawing attractive and informative statistical graphics.
+  - Used for generating heatmaps and correlation plots to understand relationships between features.
+
+### Main Machine Learning Libraries:
+
+- **Scikit-learn:**
+  - Used for splitting the dataset, preprocessing data, and evaluating machine learning models.
+  - Key functions include model evaluation metrics like `mean_squared_error` and `r2_score`.
+  
+- **XGBoost:**
+  - A powerful, efficient, and scalable implementation of gradient boosting framework.
+  - Utilized for training the regression model to predict house sale prices.
+  - Due to its size, it is excluded from the deployed app to avoid increasing slug size but is used during model training and development.
+
+### Other Libraries:
+
+- **Joblib:**
+  - Used for saving and loading the trained model efficiently in the `.pkl` format for later use in prediction tasks.
+  
+- **Flask:**
+  - A lightweight web framework used to build the API that communicates between the machine learning model and the Streamlit app.
+  
+- **Streamlit:**
+  - Used to build the interactive web dashboard for visualizing data, making predictions, and displaying model performance metrics.
+
+These libraries were crucial in building an end-to-end machine learning solution, from data preprocessing to model deployment.
+
+## Run Locally
+
+This repository contains the entire process for creating a machine learning model to predict house prices, from data collection and processing to model training, evaluation, and deployment via a Streamlit dashboard.
+
+### To use this repository, follow these steps:
+
+1. **Fork or Clone the Repository**
+
+   First, fork or clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/defridge/HeritageHousing
+   cd HeritageHousing
+   ```
+
+2. **Install Dependencies**
+
+   Install the required dependencies by running one of the following commands, depending on your environment:
+
+   For development (including xgboost for model training):
+
+   ```bash
+   pip install -r requirements-notebooks.txt
+   ```
+
+   For deployment (excluding xgboost to reduce slug size):
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set Up the Datasets**
+
+   Register an account with [Kaggle](https://www.kaggle.com/) and create a new API token, download the kaggle.json and place it in the projects root directory.
+
+   If you're using a Jupyter notebook for exploratory analysis or model training, ensure the dataset paths are correct.
+
+4. **Run the Jupyter Notebooks**
+
+   In the development phase, run the Jupyter notebooks in the following order:
+
+   -  **data_collection.ipynb:** Downloads the data from source. Inspects the data and saves to correct folders.
+
+   -  **data_exploration_correlation_study.ipynb:** Preprocesses the dataset, handles missing values, and generates new features such as `TotalSF`.
+
+   - **model_building_and_evaluation.ipynb:** Provides an evaluation of the trained model with key metrics such as R², RMSE, and visualizations of predictions vs actual values.
+
+5. **Run the Streamlit Dashboard**
+
+   Start the Streamlit web app by running the following command:
+
+   ```bash
+   streamlit run app.py
+   ```
+
+   This will launch the interactive dashboard where you can visualize data, analyze predictions, and see model performance.
+
+## Credits
+
+This project was made possible by the support and guidance of several key resources and contributors. Special thanks to the following:
+
+- **[Kaggle Ames Housing Dataset](https://www.kaggle.com/datasets/codeinstitute/housing-prices-data)**: For providing the dataset used in this project.
+- **[Streamlit documentation](https://docs.streamlit.io/)**: For guiding the development of the interactive web app.
+- **[XGBoost documentation](https://xgboost.readthedocs.io/)**: For providing resources on the XGBoost machine learning library, which was used for model training and evaluation.
+- **[Heroku documentation](https://devcenter.heroku.com/)**: For deploying both the Streamlit app and Flask API.
+- **Code Institute**: For project guidance and structure ideas drawn from past educational resources.
+-  [Churnometer repo by Code Institute](https://github.com/Code-Institute-Solutions/churnometer#readme): For the Readme template/structure.
+- [Walkthrough project 1 - Malaria](https://github.com/Code-Institute-Solutions/WalkthroughProject01/tree/main): For the code structure and parts of the code for the notebooks. 
+
+All third-party libraries and frameworks used in the project have been credited in the `requirements.txt` and `requirements-notebooks.txt` files.
+
