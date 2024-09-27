@@ -2,6 +2,8 @@
 
 This project aims to help Lydia Doe estimate the sale prices of her inherited houses in Ames, Iowa, using machine learning and data visualization.
 
+Link to deployed app can be found here: **Streamlit App**: [Heritage Housing App](https://heritagehousingpp5-5d67c321f61a.herokuapp.com/)
+
 ## Table of Contents
 
 1. [Project Dataset](#project-dataset)
@@ -395,8 +397,8 @@ This project was made possible by the support and guidance of several key resour
 - **[XGBoost documentation](https://xgboost.readthedocs.io/)**: For providing resources on the XGBoost machine learning library, which was used for model training and evaluation.
 - **[Heroku documentation](https://devcenter.heroku.com/)**: For deploying both the Streamlit app and Flask API.
 - **Code Institute**: For project guidance and structure ideas drawn from past educational resources.
--  [Churnometer repo by Code Institute](https://github.com/Code-Institute-Solutions/churnometer#readme): For the Readme template/structure.
-- [Walkthrough project 1 - Malaria](https://github.com/Code-Institute-Solutions/WalkthroughProject01/tree/main): For the code structure and parts of the code for the notebooks. 
+- **[Churnometer repo by Code Institute](https://github.com/Code-Institute-Solutions/churnometer#readme):** For the Readme template/structure.
+- **[Walkthrough project 1 - Malaria](https://github.com/Code-Institute-Solutions/WalkthroughProject01/tree/main):** For the code structure and parts of the code for the notebooks. 
 
 All third-party libraries and frameworks used in the project have been credited in the `requirements.txt` and `requirements-notebooks.txt` files.
 
