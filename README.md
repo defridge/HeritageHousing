@@ -2,7 +2,9 @@
 
 This project aims to help Lydia Doe estimate the sale prices of her inherited houses in Ames, Iowa, using machine learning and data visualization.
 
-Link to deployed app can be found here: **Streamlit App**: [Heritage Housing App](https://heritagehousingpp5-5d67c321f61a.herokuapp.com/)
+Link to deployed app can be found here: [Heritage Housing App](https://heritagehousingpp5-5d67c321f61a.herokuapp.com/)
+
+Link to deployed API Flask app can be found here: [Heritage Housing Flask API](https://housingmodel-api-6a6b8e797fa2.herokuapp.com/)
 
 ## Table of Contents
 
@@ -32,17 +34,29 @@ The dataset used for this project is publicly available and sourced from the [Ka
 
 ### Key Features:
 - **1stFlrSF:** First Floor square feet (334 - 4692)
+
 - **2ndFlrSF:** Second floor square feet (0 - 2065)
+
 - **BedroomAbvGr:** Bedrooms above grade (0 - 8)
+
 - **BsmtExposure:** Walkout or garden level walls (Gd: Good, Av: Average, Mn: Minimum, No: No Exposure, None: No Basement)
+
 - **BsmtFinType1:** Rating of basement finished area (GLQ: Good Living Quarters, ALQ: Average Living Quarters, BLQ: Below Average Living Quarters, etc.)
+
 - **TotalBsmtSF:** Total square feet of basement area (0 - 6110)
+
 - **GarageArea:** Size of the garage in square feet (0 - 1418)
+
 - **GarageYrBlt:** Year garage was built (1900 - 2010)
+
 - **GrLivArea:** Above grade (ground) living area square feet (334 - 5642)
+
 - **KitchenQual:** Kitchen quality (Ex: Excellent, Gd: Good, TA: Typical/Average, Fa: Fair, Po: Poor)
+
 - **OverallQual:** Overall quality rating of the house (1-10)
+
 - **YearBuilt:** Year the house was built (1872 - 2010)
+
 - **SalePrice:** Sale price of the house (34900 - 755000)
 
 ## Business Requirements
@@ -387,6 +401,32 @@ This repository contains the entire process for creating a machine learning mode
    ```
 
    This will launch the interactive dashboard where you can visualize data, analyze predictions, and see model performance.
+
+6. **Run the Flask API (Hosted in a Separate Repository)**
+
+   The Flask API for this project is hosted in a separate repository. To use the Flask API locally:
+
+   First, fork or clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/defridge/model.api
+   cd model.api
+   ```
+
+   Install the required dependencies by running one of the following commands, depending on your environment:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   Run the Flask API
+
+   ```bash
+   python app.py
+   ```
+
+   The Flask API will be available at `http://127.0.0.1:5000`. You can use this endpoint to make predictions by sending POST requests to `/predict`.
+
 
 ## Credits
 

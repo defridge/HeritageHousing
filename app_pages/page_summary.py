@@ -1,7 +1,7 @@
 import streamlit as st
 
 def app():
-    st.title("Heritage Hosuing")
+    st.title("Heritage Housing")
 
     st.header("Project Summary")
     

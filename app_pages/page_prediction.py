@@ -22,6 +22,11 @@ def app():
     year_built = st.number_input("Year the house was built:", min_value=1800, max_value=2023, value=2000)
     overall_qual = st.slider("Overall quality (1-10):", min_value=1, max_value=10, value=5)
 
+    # Add validation to ensure GrLivArea is not larger than TotalSF
+    if grlivarea > total_sf:
+        st.error("Above grade living area (GrLivArea) cannot be larger than the total square footage (TotalSF).")
+        return
+
     # Prepare the input data for the API
     input_data = {
         'GrLivArea': grlivarea,
